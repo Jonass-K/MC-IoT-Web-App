@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Kugellabyrinth</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <canvas id="mycanvas" width="200" height="200" style="border:1px solid #000000;">
+
+
+
+    </canvas>
+
+    <script>
+
+        navigator.permissions.query({ name: 'gyroscope' })
+            .then(result => {
+                if (result.state === 'denied') {
+                    console.log('Permission to use gyroscope sensor is denied.');
+                    return;
+                }
+                console.log('Permission to use gyroscope sensor is granted.')
+            });
+
+        
+
+
+
+        /*  
+        let gyroscope = new Gyroscope({frequency: 60});
+
+        gyroscope.addEventListener('reading', e => {
+            console.log("Angular velocity along the X-axis " + gyroscope.x);
+            console.log("Angular velocity along the Y-axis " + gyroscope.y);
+            console.log("Angular velocity along the Z-axis " + gyroscope.z);
+        });
+
+        gyroscope.start();
+        */
+
+        
+        var marbel = { x: 15, y: 185 };
+
+        var canvas = document.getElementById("mycanvas");
+        var pencil = canvas.getContext("2d");
+        
+        pencil.moveTo(0, 30);
+        pencil.lineTo(30, 30);
+        pencil.stroke();
+
+        pencil.moveTo(0, 60);
+        pencil.lineTo(30, 60);
+        pencil.stroke();
+
+        pencil.moveTo(0, 120);
+        pencil.lineTo(30, 120);
+        pencil.stroke();
+
+
+
+        pencil.beginPath();
+        pencil.arc(15, 15, 12, 0, 2 * Math.PI);
+        pencil.stroke();
+        pencil.closePath();
+
+        pencil.beginPath();
+        pencil.arc(15, 45, 12, 0, 2 * Math.PI);
+        pencil.stroke();
+        pencil.closePath();
+
+        pencil.beginPath();
+        pencil.arc(15, 105, 12, 0, 2 * Math.PI);
+        pencil.stroke();
+        pencil.closePath();
+
+        pencil.beginPath();
+        pencil.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
+        pencil.fill();
+        pencil.closePath();
+
+    </script>
+</body>
+
+</html>
