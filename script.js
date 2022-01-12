@@ -311,39 +311,40 @@ function askPermission() {
 }
 
 function stopGame() {
+    start = false;
     document.getElementById('button-text').innerHTML = "CLICK TO START";
     window.removeEventListener("deviceorientation", orientationEvent);
-    start = false;
     console.log("case: stop the game");
 }
 
 function startGame() {
+    start = true;
     document.getElementById('button-text').innerHTML = "CLICK TO STOP";
     window.addEventListener("deviceorientation", orientationEvent);
-    start = true;
     console.log("case: start the game");
 }
 
 
-function clickButton(callback) {
+function clickButton() {
     console.log("click, start: " + start + ", granted: " + granted + ", supported: " + supported);
 
     if (start == true) {
         stopGame();
-        callback(null);
+       // callback(null);
     } else if (supported == true && granted == true) {
         startGame();
-        callback(null);
+        //callback(null);
     } else if (supported == false) {
         console.log("case: no support");
-        callback(new Error("DeviceOrientation is not supported."));
+       // callback(new Error("DeviceOrientation is not supported."));
     } else if (granted == false) {
         if (askPermission() == true) {
             console.log("case: permission granted");
             startGame();
+           // callback(null);
         } else {
             console.log("case: permission denied");
-            callback(new Error("DeviceOrientation is not granted."));
+            //callback(new Error("DeviceOrientation is not granted."));
         }
     }
 }
