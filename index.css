@@ -1,8 +1,5 @@
 body {
-    background-color: #B7C5A0;
-    font-family:Arial, Helvetica, sans-serif;
-    
-
+    background-color: #B7C5A0;    
 
     display: flex;
     flex-direction: column;
@@ -20,7 +17,7 @@ html, body {
 }
 
 canvas {
-    height: 100%;
+    height: 50%;
     flex: 1 1 0;
     min-width: 0;
 
@@ -41,7 +38,7 @@ canvas {
     border-color: black;
     border-style: solid;
 
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 
 }
 
@@ -51,7 +48,13 @@ canvas {
 
 #button-text {
     color: black;
-    font-weight: bold; 
+    font-weight: bold;
+    font-family: 'Cochin';
     
+    margin-top: 5px;
     margin-bottom: 0px;
+}
+
+#arrow {
+    margin-top: -10px;
 }

@@ -5,24 +5,27 @@ var start = false;
 var marbel = { x: 15, y: 185 };
 var canvas = document.getElementById("mycanvas");
 var button = document.getElementById("button");
+
 var w;
 var h;
+var scale = 2;
 var ctx = canvas.getContext("2d");
 
-//setInterval(draw, 2000);
+
+
 draw();
 window.onresize = draw;
 
 function setProp() {
     console.log("set prop");
     var computed = getComputedStyle(canvas);
-    w = parseInt(computed.getPropertyValue("width"), 10);
-    h = parseInt(computed.getPropertyValue("height"), 10);
+    w = parseInt(computed.getPropertyValue("width"), 10) * scale;
+    h = parseInt(computed.getPropertyValue("height"), 10) * scale;
 
     canvas.width = w;
     canvas.height = h;
 
-    button.style.width = w + "px";
+    button.style.width = w/scale + "px";
     console.log("button width: " + button.style.width);
 }
 
@@ -208,20 +211,7 @@ function draw() {
 
     ctx.arcTo(w, h, 0.758208955223881*w, h, 0);
 
-    ctx.fill();
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
+    ctx.fill();    
     ctx.stroke();
 }
 
