@@ -241,7 +241,7 @@ function orientationEvent(event) {
 
 var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) {
     document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
-
+    console.log("handle orientation");
     ctx.clearRect(0, 0, w, h);
     leftToRight *= 1;
     frontToBack *= 1;
@@ -259,11 +259,13 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     }
     */
 
-    marbel.x += leftToRight;
-    marbel.y += frontToBack;
+    var mx = marbel.x + leftToRight;
+    var my = marbel.y + frontToBack;
 
 
-    if (ctx.isPointInPath(path, marbel.x, marbel.y)) {
+    if (ctx.isPointInPath(path, mx, my)) {
+        marbel.x = mx;
+        marbel.y = my;
         draw();
     }
 };
@@ -312,12 +314,14 @@ function stopGame() {
     document.getElementById('button-text').innerHTML = "CLICK TO START";
     window.removeEventListener("deviceorientation", orientationEvent);
     start = false;
+    console.log("case: stop the game");
 }
 
 function startGame() {
     document.getElementById('button-text').innerHTML = "CLICK TO STOP";
     window.addEventListener("deviceorientation", orientationEvent);
     start = true;
+    console.log("case: start the game");
 }
 
 
@@ -327,23 +331,20 @@ function clickButton(callback) {
     if (start == true) {
         stopGame();
         callback(null);
-
     } else if (supported == true && granted == true) {
         startGame();
         callback(null);
-
     } else if (supported == false) {
+        console.log("case: no support");
         callback(new Error("DeviceOrientation is not supported."));
-
     } else if (granted == false) {
         if (askPermission() == true) {
+            console.log("case: permission granted");
             startGame();
-
         } else {
+            console.log("case: permission denied");
             callback(new Error("DeviceOrientation is not granted."));
-
         }
-
     }
 }
 
