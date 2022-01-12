@@ -8,7 +8,7 @@ var button = document.getElementById("button");
 
 var w;
 var h;
-var scale = 2;
+var scale = 1;
 var ctx = canvas.getContext("2d");
 
 
