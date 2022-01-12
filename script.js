@@ -83,6 +83,7 @@ function drawDesign() {
 
 function draw() {
     setProp();
+    ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
 
     //drawTitle();
@@ -232,6 +233,7 @@ function draw() {
 
 
 function orientationEvent(event) {
+    console.log("orientationEvent");
     var rotateDegrees = event.alpha;
     var leftToRight = event.gamma;
     var frontToBack = event.beta;
@@ -240,9 +242,8 @@ function orientationEvent(event) {
 }
 
 var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) {
-    document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
-    console.log("handle orientation");
-    ctx.clearRect(0, 0, w, h);
+   //document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
+    console.log("handle orientation event");
     leftToRight *= 1;
     frontToBack *= 1;
     /** 
@@ -284,17 +285,19 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 function askPermission() {
     if (window.DeviceOrientationEvent == null) {
         supported = false;
-        // TODO: Fehlermeldung
+        console.log("case: no support");
         return false;
 
     } else if (DeviceOrientationEvent.requestPermission) {
         supported = true
         DeviceOrientationEvent.requestPermission().then(function (state) {
             if (state == "granted") {
+                console.log("case: permission granted");
                 granted = true;
                 return true;
 
             } else {
+                console.log("case: permission denied");
                 granted = false;
                 // TODO: Fehlermeldung
                 return false;
@@ -302,9 +305,12 @@ function askPermission() {
             }
         }, function (err) {
             // TODO: Fehlermeldung
+
+            console.log("case: permission error");
             return false;
         });
     } else {
+        console.log("case: permission special");
         granted = true;
         return true;
     }
@@ -313,14 +319,18 @@ function askPermission() {
 function stopGame() {
     start = false;
     document.getElementById('button-text').innerHTML = "CLICK TO START";
-    window.removeEventListener("deviceorientation", orientationEvent);
+    window.removeEventListener("deviceorientation", (e) => {
+        orientationEvent(e);
+    });
     console.log("case: stop the game");
 }
 
 function startGame() {
     start = true;
     document.getElementById('button-text').innerHTML = "CLICK TO STOP";
-    window.addEventListener("deviceorientation", orientationEvent);
+    window.addEventListener("deviceorientation", (e) => {
+        orientationEvent(e);
+    });
     console.log("case: start the game");
 }
 
@@ -339,11 +349,9 @@ function clickButton() {
        // callback(new Error("DeviceOrientation is not supported."));
     } else if (granted == false) {
         if (askPermission() == true) {
-            console.log("case: permission granted");
             startGame();
            // callback(null);
         } else {
-            console.log("case: permission denied");
             //callback(new Error("DeviceOrientation is not granted."));
         }
     }
