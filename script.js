@@ -11,6 +11,7 @@ var h;
 var scale = 1;
 var ctx = canvas.getContext("2d");
 var path;
+var marbelPath;
 
 
 draw();
@@ -40,10 +41,9 @@ function setProp() {
 
 
 function drawMarbel() {
-    ctx.beginPath();
-    ctx.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
+    marbelPath = new Path2D();
+    marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
+    marbelPath.closePath();
 }
 
 function drawTitle() {
@@ -222,6 +222,11 @@ function draw() {
 
     ctx.fill(path);    
     ctx.stroke(path);
+
+
+    ctx.fillStyle = 'black';
+    drawMarbel();
+    ctx.fill(marbelPath);
 }
 
 
@@ -237,9 +242,9 @@ function orientationEvent(event) {
 var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) {
     document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
 
-    ctx.clearRect(marbel.x - 11, marbel.y - 11, 22, 22);
-    leftToRight *= 1.25;
-    frontToBack *= 1.25;
+    ctx.clearRect(0, 0, w, h);
+    leftToRight *= 1;
+    frontToBack *= 1;
     /** 
     if ((leftToRight > 0) && (marbel.x)) {
         marbel.x = Math.min(marbel.x + leftToRight, 190);
@@ -259,7 +264,7 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 
 
     if (ctx.isPointInPath(path, marbel.x, marbel.y)) {
-        drawMarbel();
+        draw();
     }
 };
 
