@@ -1,6 +1,6 @@
 body {
     background-color: #B7C5A0;
-    font-family: 'Cochin';
+    font-family:Arial, Helvetica, sans-serif;
     
 
 
@@ -26,7 +26,7 @@ canvas {
 
 
     border-style: solid;
-    border-width: 3px;
+    border-width: 5px;
     aspect-ratio: 335/722;
 }
 
@@ -37,7 +37,7 @@ canvas {
     
     text-align: center;
     
-    border-width: 3px;
+    border-width: 5px;
     border-color: black;
     border-style: solid;
 
