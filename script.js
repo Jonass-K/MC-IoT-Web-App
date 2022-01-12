@@ -18,17 +18,23 @@ window.onresize = draw;
 
 function setProp() {
     console.log("set prop");
-    var computed = getComputedStyle(canvas);
-    w = parseInt(computed.getPropertyValue("width"), 10) * scale;
-    h = parseInt(computed.getPropertyValue("height"), 10) * scale;
+    var computedCanvas = getComputedStyle(canvas);
+    w = parseInt(computedCanvas.getPropertyValue("width"), 10) * scale;
+    h = parseInt(computedCanvas.getPropertyValue("height"), 10) * scale;
 
+    var wwidth = window.innerWidth;
+        
+    console.log("wwidth: " + wwidth + ", wheight: " + window.innerHeight);
+    if (window.innerWidth/h > 335/722 && window.innerWidth/h < 550/722) {
+        console.log("moin moin");
+        w = wwidth * 0.9;
+    }
     canvas.width = w;
     canvas.height = h;
 
     button.style.width = w/scale + "px";
     console.log("button width: " + button.style.width);
 }
-
 
 
 function drawMarbel() {

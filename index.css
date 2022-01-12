@@ -16,8 +16,8 @@ html, body {
     height: 100%;
 }
 
-canvas {
-    height: 50%;
+#mycanvas {
+
     flex: 1 1 0;
     min-width: 0;
 
