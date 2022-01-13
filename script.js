@@ -48,6 +48,15 @@ function drawMarbel() {
     marbelPath = new Path2D();
     marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
     marbelPath.closePath();
+    ctx.fill(marbel);
+}
+
+function deleteMarbel() {
+    ctx.fillStyle = '#CAA5A4';
+    marbelPath = new Path2D();
+    marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
+    marbelPath.closePath();
+    ctx.fill(marbel);
 }
 
 function drawTitle() {
@@ -231,9 +240,7 @@ function draw() {
 
 
     ctx.fillStyle = 'black';
-    ctx.save();
     drawMarbel();
-    ctx.fill(marbelPath);
 }
 
 
@@ -273,11 +280,10 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     console.log("mx: " + mx + ", my: " + my);
 
     if (ctx.isPointInPath(path, mx, my)) {
+        deleteMarbel();
         marbel.x = mx;
         marbel.y = my;
-        ctx.restore();
         drawMarbel();
-        ctx.fill(marbelPath);
     } else {
         console.log("no in path");
     }
