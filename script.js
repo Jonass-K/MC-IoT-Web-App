@@ -2,7 +2,7 @@ var supported = true;
 var granted = false;
 var start = false;
 
-var marbel = { x: -1, y: -1 };
+var marbel = { x: -1, y: -1 , r: 10};
 var canvas = document.getElementById("mycanvas");
 var button = document.getElementById("button");
 
@@ -36,7 +36,8 @@ function setProp() {
     canvas.width = w;
     canvas.height = h;
     if (marbel.x == -1 && marbel.y == -1) {
-        marbel = {x: 0.8447761194*w, y: 0.9681440443*h};
+        marbel.x = 0.8447761194*w;
+        marbel.y = 0.9681440443*h;
     }
 
     button.style.width = w/scale + "px";
@@ -46,7 +47,7 @@ function setProp() {
 function drawMarbel(color = 'black') {
     ctx.fillStyle = color;
     marbelPath = new Path2D();
-    marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
+    marbelPath.arc(marbel.x, marbel.y, marbel.r, 0, 2 * Math.PI);
     marbelPath.closePath();
     ctx.fill(marbelPath);
 }
@@ -242,11 +243,33 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 
     console.log("mx: " + mx + ", my: " + my);
 
-    if (ctx.isPointInPath(path, mx, my) && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
+    if (ctx.isPointInPath(path, mx - marbel.r, my - marbel.r)
+    && ctx.isPointInPath(path, mx - marbel.r, my + marbel.r) 
+    && ctx.isPointInPath(path, mx + marbel.r, my - marbel.r) 
+    && ctx.isPointInPath(path, mx + marbel.r, my + marbel.r) 
+    && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
         lastWorked = true;
         drawPath();
         marbel.x = mx;
         marbel.y = my;
+        drawMarbel();
+    } else if (ctx.isPointInPath(path, marbel.x - marbel.r, my - marbel.r)
+    && ctx.isPointInPath(path, marbel.x - marbel.r, my + marbel.r) 
+    && ctx.isPointInPath(path, marbel.x + marbel.r, my - marbel.r) 
+    && ctx.isPointInPath(path, marbel.x + marbel.r, my + marbel.r) 
+    && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
+        lastWorked = true;
+        drawPath();
+        marbel.y = my;
+        drawMarbel();
+    } else if (ctx.isPointInPath(path, mx - marbel.r, marbel.y - marbel.r)
+    && ctx.isPointInPath(path, mx - marbel.r, marbel.y + marbel.r) 
+    && ctx.isPointInPath(path, mx + marbel.r, marbel.y - marbel.r) 
+    && ctx.isPointInPath(path, mx + marbel.r, marbel.y + marbel.r) 
+    && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
+        lastWorked = true;
+        drawPath();
+        marbel.x = mx;
         drawMarbel();
     } else {
         lastOrientation = {ftb: frontToBack/Math.abs(frontToBack), ltr: leftToRight/Math.abs(leftToRight)};
