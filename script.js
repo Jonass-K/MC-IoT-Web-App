@@ -323,6 +323,7 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 };
 
 function checkForLose() {
+    console.log("holes: " + holes);
     for (var hole in holes) {
         if (ctx.isPointInPath(hole, marbel.x, marbel.y)) {
             stopGame();
@@ -333,6 +334,7 @@ function checkForLose() {
 
 
 function checkForWin() {
+    console.log("goal: " + goal);
     if (ctx.isPointInPath(goal, marbel.x, marbel.y)) {
         stopGame();
     }
@@ -381,22 +383,18 @@ function askPermission(callback) {
 function stopGame() {
     console.log("case: stop the game");
     start = false;
+    window.removeEventListener("deviceorientation", orientationEvent);
     document.getElementById('button-text').innerHTML = "CLICK TO START";
     marbel.x = 0.8447761194*w;
     marbel.y = 0.9681440443*h;
     draw();
-    window.removeEventListener("deviceorientation", function(e) {
-        orientationEvent(e);
-    });
 }
 
 function startGame() {
     start = true;
     console.log("case: start the game");
     document.getElementById('button-text').innerHTML = "CLICK TO STOP";
-    window.addEventListener("deviceorientation", function(e) {
-        orientationEvent(e);
-    });
+    window.addEventListener("deviceorientation", orientationEvent);
 }
 
 
