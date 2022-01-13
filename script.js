@@ -282,37 +282,34 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 
 
 
-function askPermission() {
+function askPermission(callback) {
     if (window.DeviceOrientationEvent == null) {
         supported = false;
         console.log("case: no support");
-        return false;
-
+        callback(new Error("DeviceOrientation is not supported."));
     } else if (DeviceOrientationEvent.requestPermission) {
         supported = true
         DeviceOrientationEvent.requestPermission().then(function (state) {
             if (state == "granted") {
                 console.log("case: permission granted");
                 granted = true;
-                return true;
-
+                callback(null);
             } else {
                 console.log("case: permission denied");
                 granted = false;
-                // TODO: Fehlermeldung
-                return false;
+                callback(new Error("Permission denied by user"));
 
             }
         }, function (err) {
             // TODO: Fehlermeldung
 
             console.log("case: permission error");
-            return false;
+            callback(err);
         });
     } else {
         console.log("case: permission special");
         granted = true;
-        return true;
+        callback(null);
     }
 }
 
@@ -350,14 +347,13 @@ function clickButton() {
         console.log("case: no support");
        // callback(new Error("DeviceOrientation is not supported."));
     } else if (granted == false) {
-        if (askPermission() == true) {
-            console.log("case: asked and true");
-            startGame();
-           // callback(null);
-        } else {
-            console.log("case: asked and false");
-            //callback(new Error("DeviceOrientation is not granted."));
-        }
+        askPermission(function(err) {
+            if (err == null) {
+                startGame();
+            } else {
+                
+            }
+        })
     }
 }
 
