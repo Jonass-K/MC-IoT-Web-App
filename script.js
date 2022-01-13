@@ -324,8 +324,8 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 
 function checkForLose() {
     console.log("holes: " + holes);
-    for (var hole in holes) {
-        if (ctx.isPointInPath(hole, marbel.x, marbel.y)) {
+    for (var i = 0; i < holes.length; i++) {
+        if (ctx.isPointInPath(holes[i], marbel.x, marbel.y)) {
             stopGame();
             break;
         }
