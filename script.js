@@ -43,37 +43,12 @@ function setProp() {
 }
 
 
-function drawMarbel() {
-    ctx.fillStyle = 'black';
+function drawMarbel(color = 'black') {
+    ctx.fillStyle = color;
     marbelPath = new Path2D();
     marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
     marbelPath.closePath();
     ctx.fill(marbelPath);
-}
-
-function deleteMarbel() {
-    ctx.fillStyle = '#CAA5A4';
-    marbelPath = new Path2D();
-    marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
-    marbelPath.closePath();
-    ctx.fill(marbelPath);
-}
-
-function drawTitle() {
-    var title = new Image();
-    title.src = "./Title.svg";
-
-    
-
-    title.onload = function() {
-        title.width *= 0.88;
-        title.height *= 0.88;
-
-        var x = (w - title.width) / 2;
-        var y = 0.01108033241*h;
-        
-        ctx.drawImage(title, x, y, title.width, title.height);
-    };
 }
 
 function drawDesign() {
@@ -94,15 +69,7 @@ function drawDesign() {
     };
 }
 
-function draw() {
-    console.log("draw");
-    ctx.clearRect(0, 0, w, h);
-    ctx.imageSmoothingEnabled = false;
-
-    //drawTitle();
-    drawDesign();
-
-
+function drawPath() {
     ctx.strokeStyle = 'black';
     ctx.fillStyle = '#CAA5A4';
     ctx.lineWidth = 3;
@@ -236,10 +203,16 @@ function draw() {
 
     ctx.fill(path);    
     ctx.stroke(path);
+}
 
 
+function draw() {
+    console.log("draw");
+    ctx.clearRect(0, 0, w, h);
+    ctx.imageSmoothingEnabled = false;
 
-    ctx.fillStyle = 'black';
+    drawDesign();
+    drawPath();
     drawMarbel();
 }
 
@@ -254,37 +227,30 @@ function orientationEvent(event) {
     handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
 }
 
+var lastOrientation = {ftb: 0, ltr: 0}
+var lastWorked = true;
+
 var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) {
    //document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
     console.log("handle orientation event");
     console.log("leftToRight: " + leftToRight + ", frontToBack: " + frontToBack);
     leftToRight *= 1;
     frontToBack *= 1;
-    /** 
-    if ((leftToRight > 0) && (marbel.x)) {
-        marbel.x = Math.min(marbel.x + leftToRight, 190);
-    } else if ((leftToRight < 0) && (marbel.x > 10)) {
-        marbel.x = Math.max(marbel.x + leftToRight, 10);
-    }
-
-    if ((frontToBack > 0) && (marbel.y < 190)) {
-        marbel.y = Math.min(marbel.y + frontToBack, 190);
-    } else if ((frontToBack < 0) && (marbel.y > 10)) {
-        marbel.y = Math.max(marbel.y + frontToBack, 10);
-    }
-    */
 
     var mx = marbel.x + leftToRight;
     var my = marbel.y + frontToBack;
 
     console.log("mx: " + mx + ", my: " + my);
 
-    if (ctx.isPointInPath(path, mx, my)) {
-        deleteMarbel();
+    if (ctx.isPointInPath(path, mx, my) && (lastWorked == true || (Math.abs(leftToRight) < lastOrientation.ltr && Math.abs(frontToBack) < lastOrientation.ftb))) {
+        lastWorked = true;
+        drawPath();
         marbel.x = mx;
         marbel.y = my;
         drawMarbel();
     } else {
+        lastOrientation = {ftb: frontToBack, ltr: leftToRight}
+        lastWorked = false;
         console.log("no in path");
     }
 };
