@@ -317,21 +317,23 @@ function askPermission() {
 }
 
 function stopGame() {
+    console.log("case: stop the game");
     start = false;
     document.getElementById('button-text').innerHTML = "CLICK TO START";
-    window.removeEventListener("deviceorientation", (e) => {
+    window.removeEventListener("deviceorientation", function(e) {
+        console.log("remove event listener");
         orientationEvent(e);
     });
-    console.log("case: stop the game");
 }
 
 function startGame() {
     start = true;
+    console.log("case: start the game");
     document.getElementById('button-text').innerHTML = "CLICK TO STOP";
-    window.addEventListener("deviceorientation", (e) => {
+    window.addEventListener("deviceorientation", function(e) {
+        console.log("add event listener");
         orientationEvent(e);
     });
-    console.log("case: start the game");
 }
 
 
@@ -349,9 +351,11 @@ function clickButton() {
        // callback(new Error("DeviceOrientation is not supported."));
     } else if (granted == false) {
         if (askPermission() == true) {
+            console.log("case: asked and true");
             startGame();
            // callback(null);
         } else {
+            console.log("case: asked and false");
             //callback(new Error("DeviceOrientation is not granted."));
         }
     }
