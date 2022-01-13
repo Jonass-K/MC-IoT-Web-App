@@ -4,7 +4,7 @@ var start = false;
 
 var marbel = { x: -1, y: -1 , r: 0.02054570637*h};
 var canvas = document.getElementById("mycanvas");
-var button = document.getElementById("button");
+//var button = document.getElementById("button");
 
 var w;
 var h;
@@ -17,6 +17,7 @@ var goal;
 setProp();
 draw();
 window.onresize = resized;
+clickButton();
 
 function resized() {
     setProp();
@@ -41,7 +42,7 @@ function setProp() {
         marbel.y = 0.9681440443*h;
     }
 
-    button.style.width = w/scale + "px";
+    //button.style.width = w/scale + "px";
 }
 
 
@@ -384,7 +385,7 @@ function stopGame() {
     console.log("case: stop the game");
     start = false;
     window.removeEventListener("deviceorientation", orientationEvent);
-    document.getElementById('button-text').innerHTML = "CLICK TO START";
+    //document.getElementById('button-text').innerHTML = "CLICK TO START";
     marbel.x = 0.8447761194*w;
     marbel.y = 0.9681440443*h;
     draw();
@@ -393,7 +394,7 @@ function stopGame() {
 function startGame() {
     start = true;
     console.log("case: start the game");
-    document.getElementById('button-text').innerHTML = "CLICK TO STOP";
+    //document.getElementById('button-text').innerHTML = "CLICK TO STOP";
     window.addEventListener("deviceorientation", orientationEvent);
 }
 
