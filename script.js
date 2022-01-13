@@ -40,7 +40,7 @@ function setProp() {
     
     marbel.x = 0.8447761194*w;
     marbel.y = 0.9681440443*h;
-    marbel.r = 0.02054570637*h
+    marbel.r = 0.01554570637*h
     
 
     button.style.width = w/scale + "px";
