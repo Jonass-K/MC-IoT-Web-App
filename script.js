@@ -44,6 +44,7 @@ function setProp() {
 
 
 function drawMarbel() {
+    ctx.fillStyle = 'black';
     marbelPath = new Path2D();
     marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
     marbelPath.closePath();
@@ -228,7 +229,9 @@ function draw() {
     ctx.stroke(path);
 
 
+
     ctx.fillStyle = 'black';
+    ctx.save();
     drawMarbel();
     ctx.fill(marbelPath);
 }
@@ -272,7 +275,9 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     if (ctx.isPointInPath(path, mx, my)) {
         marbel.x = mx;
         marbel.y = my;
-        draw();
+        ctx.restore();
+        drawMarbel();
+        ctx.fill(marbelPath);
     } else {
         console.log("no in path");
     }
