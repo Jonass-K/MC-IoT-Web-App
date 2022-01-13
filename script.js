@@ -25,9 +25,7 @@ function setProp() {
 
     var wwidth = window.innerWidth;
         
-    console.log("wwidth: " + wwidth + ", wheight: " + window.innerHeight);
     if (window.innerWidth/h > 335/722 && window.innerWidth/h < 550/722) {
-        console.log("moin moin");
         w = wwidth * 0.9;
     }
     canvas.width = w;
@@ -36,7 +34,6 @@ function setProp() {
     marbel = {x: 0.8447761194*w, y: 0.9681440443*h};
 
     button.style.width = w/scale + "px";
-    console.log("button width: " + button.style.width);
 }
 
 
@@ -82,6 +79,7 @@ function drawDesign() {
 }
 
 function draw() {
+    console.log("draw");
     setProp();
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
@@ -244,6 +242,7 @@ function orientationEvent(event) {
 var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) {
    //document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
     console.log("handle orientation event");
+    console.log("leftToRight: " + leftToRight + ", frontToBack: " + frontToBack);
     leftToRight *= 1;
     frontToBack *= 1;
     /** 
@@ -263,11 +262,14 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     var mx = marbel.x + leftToRight;
     var my = marbel.y + frontToBack;
 
+    console.log("mx: " + mx + "my: " + my);
 
     if (ctx.isPointInPath(path, mx, my)) {
         marbel.x = mx;
         marbel.y = my;
         draw();
+    } else {
+        console.log("no in path");
     }
 };
 
@@ -318,7 +320,6 @@ function stopGame() {
     start = false;
     document.getElementById('button-text').innerHTML = "CLICK TO START";
     window.removeEventListener("deviceorientation", function(e) {
-        console.log("remove event listener");
         orientationEvent(e);
     });
 }
@@ -328,7 +329,6 @@ function startGame() {
     console.log("case: start the game");
     document.getElementById('button-text').innerHTML = "CLICK TO STOP";
     window.addEventListener("deviceorientation", function(e) {
-        console.log("add event listener");
         orientationEvent(e);
     });
 }
@@ -351,7 +351,7 @@ function clickButton() {
             if (err == null) {
                 startGame();
             } else {
-                
+
             }
         })
     }
