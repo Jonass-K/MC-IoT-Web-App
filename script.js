@@ -11,7 +11,8 @@ var h;
 var scale = 1;
 var ctx = canvas.getContext("2d");
 var path;
-var marbelPath;
+var holes;
+var goal;
 
 setProp();
 draw();
@@ -44,15 +45,25 @@ function setProp() {
 }
 
 
-function drawMarbel(color = 'black') {
-    ctx.fillStyle = color;
-    marbelPath = new Path2D();
-    marbelPath.arc(marbel.x, marbel.y, marbel.r, 0, 2 * Math.PI);
-    marbelPath.closePath();
-    ctx.fill(marbelPath);
+function drawMarbel() {
+    drawCircle(marbel.x, marbel.y, marbel.r, 'white');
 }
 
-function drawDesign() {
+function drawCircle(x, y, r, color = 'black', stroke = false) {
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    var circle = new Path2D();
+    circle.arc(x, y, r, 0, 2 * Math.PI);
+    circle.closePath();
+    if (stroke == true) {
+        ctx.stroke(circle);
+    } else {
+        ctx.fill(circle);
+    }
+    return circle;
+}
+
+function drawBackground() {
     var design = new Image();
     design.src = "./Design.svg";
     design.width = w;
@@ -68,6 +79,28 @@ function drawDesign() {
         
         ctx.drawImage(design, x, y, design.width, design.height);
     };
+}
+
+function drawHoles() {
+    holes = [];
+    holes.push(drawCircle(0.6997014925*w, 0.83770193906*h, 0.02254570637*h)); //Entrenchments
+    holes.push(drawCircle(0.132014925*w, 0.8750193906*h, 0.02254570637*h)); //Frankfurt
+    holes.push(drawCircle(0.128014925*w, 0.604193906*h, 0.02254570637*h)); //Coloogne
+    holes.push(drawCircle(0.4244925*w, 0.636193906*h, 0.02254570637*h)); //Bridge Destroyed
+    holes.push(drawCircle(0.8584925*w, 0.7556193906*h, 0.02254570637*h)); //Leipzig
+    holes.push(drawCircle(0.8454925*w, 0.3876193906*h, 0.02254570637*h)); //Dresden
+    holes.push(drawCircle(0.4744925*w, 0.4406193906*h, 0.02254570637*h)); //Hanover
+    holes.push(drawCircle(0.6244925*w, 0.5106193906*h, 0.02254570637*h)); //Magdeburg
+    holes.push(drawCircle(0.2544925*w, 0.4006193906*h, 0.02254570637*h)); //Road Mined
+    holes.push(drawCircle(0.1404925*w, 0.1306193906*h, 0.02254570637*h)); //Hamburg
+    holes.push(drawCircle(0.4744925*w, 0.2706193906*h, 0.02254570637*h)); //Spandau links
+    holes.push(drawCircle(0.5744925*w, 0.2756193906*h, 0.02254570637*h)); //Spandau rechts
+    holes.push(drawCircle(0.7044925*w, 0.2056193906*h, 0.02254570637*h)); //Potsdam
+}
+
+function drawGoal() {
+    goal = drawCircle(0.5384925*w, 0.1666193906*h, 0.02254570637*h, 'black'); //Berlin
+    drawCircle(0.5384925*w, 0.1666193906*h, 0.02754570637*h, 'black', true); //Berlin
 }
 
 function drawPath() {
@@ -206,14 +239,19 @@ function drawPath() {
     ctx.stroke(path);
 }
 
+function drawForeground() {
+    drawPath();
+    drawHoles();
+    drawGoal();
+}
 
 function draw() {
     console.log("draw");
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
 
-    drawDesign();
-    drawPath();
+    drawBackground();
+    drawForeground();
     drawMarbel();
 }
 
@@ -249,28 +287,34 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     && ctx.isPointInPath(path, mx + marbel.r, my + marbel.r) 
     && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
         lastWorked = true;
-        drawPath();
+        drawForeground();
         marbel.x = mx;
         marbel.y = my;
         drawMarbel();
+        checkForLose();
+        checkForWin();
     } else if (ctx.isPointInPath(path, marbel.x - marbel.r, my - marbel.r)
     && ctx.isPointInPath(path, marbel.x - marbel.r, my + marbel.r) 
     && ctx.isPointInPath(path, marbel.x + marbel.r, my - marbel.r) 
     && ctx.isPointInPath(path, marbel.x + marbel.r, my + marbel.r) 
     && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
         lastWorked = true;
-        drawPath();
+        drawForeground();
         marbel.y = my;
         drawMarbel();
+        checkForLose();
+        checkForWin();
     } else if (ctx.isPointInPath(path, mx - marbel.r, marbel.y - marbel.r)
     && ctx.isPointInPath(path, mx - marbel.r, marbel.y + marbel.r) 
     && ctx.isPointInPath(path, mx + marbel.r, marbel.y - marbel.r) 
     && ctx.isPointInPath(path, mx + marbel.r, marbel.y + marbel.r) 
     && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
         lastWorked = true;
-        drawPath();
+        drawForeground();
         marbel.x = mx;
         drawMarbel();
+        checkForLose();
+        checkForWin();
     } else {
         lastOrientation = {ftb: frontToBack/Math.abs(frontToBack), ltr: leftToRight/Math.abs(leftToRight)};
         lastWorked = false;
@@ -278,7 +322,21 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     }
 };
 
+function checkForLose() {
+    for (var hole in holes) {
+        if (ctx.isPointInPath(hole, marbel.x, marbel.y)) {
+            stopGame();
+            break;
+        }
+    }
+}
 
+
+function checkForWin() {
+    if (ctx.isPointInPath(goal, marbel.x, marbel.y)) {
+        stopGame();
+    }
+}
 
 
 
@@ -324,6 +382,9 @@ function stopGame() {
     console.log("case: stop the game");
     start = false;
     document.getElementById('button-text').innerHTML = "CLICK TO START";
+    marbel.x = 0.8447761194*w;
+    marbel.y = 0.9681440443*h;
+    draw();
     window.removeEventListener("deviceorientation", function(e) {
         orientationEvent(e);
     });
