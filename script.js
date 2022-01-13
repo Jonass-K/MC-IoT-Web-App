@@ -2,7 +2,7 @@ var supported = true;
 var granted = false;
 var start = false;
 
-var marbel = { x: -1, y: -1 , r: 0.02054570637*h};
+var marbel = { x: -1, y: -1 , r: -1};
 var canvas = document.getElementById("mycanvas");
 //var button = document.getElementById("button");
 
@@ -16,8 +16,8 @@ var goal;
 
 setProp();
 draw();
-window.onresize = resized;
 clickButton();
+window.onresize = resized;
 
 function resized() {
     setProp();
@@ -40,6 +40,7 @@ function setProp() {
     if (marbel.x == -1 && marbel.y == -1) {
         marbel.x = 0.8447761194*w;
         marbel.y = 0.9681440443*h;
+        marbel.r = 0.02054570637*h
     }
 
     //button.style.width = w/scale + "px";
