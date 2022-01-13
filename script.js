@@ -17,6 +17,7 @@ var goal;
 setProp();
 draw();
 window.onresize = resized;
+document.addEventListener("DOMContentLoaded", clickButton);
 
 function resized() {
     setProp();
