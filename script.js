@@ -37,11 +37,11 @@ function setProp() {
     }
     canvas.width = w;
     canvas.height = h;
-    if (marbel.x == -1 && marbel.y == -1) {
-        marbel.x = 0.8447761194*w;
-        marbel.y = 0.9681440443*h;
-        marbel.r = 0.02054570637*h
-    }
+    
+    marbel.x = 0.8447761194*w;
+    marbel.y = 0.9681440443*h;
+    marbel.r = 0.02054570637*h
+    
 
     button.style.width = w/scale + "px";
 }
