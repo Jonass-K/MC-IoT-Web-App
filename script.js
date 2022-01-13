@@ -4,7 +4,7 @@ var start = false;
 
 var marbel = { x: -1, y: -1 , r: -1};
 var canvas = document.getElementById("mycanvas");
-//var button = document.getElementById("button");
+var button = document.getElementById("button");
 
 var w;
 var h;
@@ -17,7 +17,7 @@ var goal;
 setProp();
 draw();
 window.onresize = resized;
-document.addEventListener("DOMContentLoaded", clickButton);
+
 
 function resized() {
     setProp();
@@ -43,7 +43,7 @@ function setProp() {
         marbel.r = 0.02054570637*h
     }
 
-    //button.style.width = w/scale + "px";
+    button.style.width = w/scale + "px";
 }
 
 
@@ -397,6 +397,7 @@ function startGame() {
     console.log("case: start the game");
     //document.getElementById('button-text').innerHTML = "CLICK TO STOP";
     window.addEventListener("deviceorientation", orientationEvent);
+    button.style.display = "none";
 }
 
 
@@ -421,6 +422,7 @@ function clickButton() {
             }
         })
     }
+
 }
 
 
