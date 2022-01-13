@@ -242,14 +242,14 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
 
     console.log("mx: " + mx + ", my: " + my);
 
-    if (ctx.isPointInPath(path, mx, my) && (lastWorked == true || (Math.abs(leftToRight) < lastOrientation.ltr && Math.abs(frontToBack) < lastOrientation.ftb))) {
+    if (ctx.isPointInPath(path, mx, my) && (lastWorked == true || leftToRight/Math.abs(leftToRight) != lastOrientation.ltr || frontToBack/Math.abs(frontToBack) != lastOrientation.ftb)) {
         lastWorked = true;
         drawPath();
         marbel.x = mx;
         marbel.y = my;
         drawMarbel();
     } else {
-        lastOrientation = {ftb: frontToBack, ltr: leftToRight}
+        lastOrientation = {ftb: frontToBack/Math.abs(frontToBack), ltr: leftToRight/Math.abs(leftToRight)};
         lastWorked = false;
         console.log("no in path");
     }
