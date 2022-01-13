@@ -48,7 +48,7 @@ function drawMarbel() {
     marbelPath = new Path2D();
     marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
     marbelPath.closePath();
-    ctx.fill(marbel);
+    ctx.fill(marbelPath);
 }
 
 function deleteMarbel() {
@@ -56,7 +56,7 @@ function deleteMarbel() {
     marbelPath = new Path2D();
     marbelPath.arc(marbel.x, marbel.y, 10, 0, 2 * Math.PI);
     marbelPath.closePath();
-    ctx.fill(marbel);
+    ctx.fill(marbelPath);
 }
 
 function drawTitle() {
