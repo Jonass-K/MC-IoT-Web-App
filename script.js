@@ -396,8 +396,10 @@ function startGame() {
     start = true;
     console.log("case: start the game");
     //document.getElementById('button-text').innerHTML = "CLICK TO STOP";
-    window.addEventListener("deviceorientation", orientationEvent);
     button.style.display = "none";
+    setProp();
+    draw();
+    window.addEventListener("deviceorientation", orientationEvent);
 }
 
 
