@@ -2,7 +2,7 @@ var supported = true;
 var granted = false;
 var start = false;
 
-var marbel = { x: 15, y: 185 };
+var marbel = { x: -1, y: -1 };
 var canvas = document.getElementById("mycanvas");
 var button = document.getElementById("button");
 
@@ -13,9 +13,14 @@ var ctx = canvas.getContext("2d");
 var path;
 var marbelPath;
 
-
+setProp();
 draw();
-window.onresize = draw;
+window.onresize = resized;
+
+function resized() {
+    setProp();
+    draw();
+}
 
 function setProp() {
     console.log("set prop");
@@ -30,8 +35,9 @@ function setProp() {
     }
     canvas.width = w;
     canvas.height = h;
-
-    marbel = {x: 0.8447761194*w, y: 0.9681440443*h};
+    if (marbel.x == -1 && marbel.y == -1) {
+        marbel = {x: 0.8447761194*w, y: 0.9681440443*h};
+    }
 
     button.style.width = w/scale + "px";
 }
@@ -80,7 +86,6 @@ function drawDesign() {
 
 function draw() {
     console.log("draw");
-    setProp();
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingEnabled = false;
 
@@ -262,7 +267,7 @@ var handleOrientationEvent = function (frontToBack, leftToRight, rotateDegrees) 
     var mx = marbel.x + leftToRight;
     var my = marbel.y + frontToBack;
 
-    console.log("mx: " + mx + "my: " + my);
+    console.log("mx: " + mx + ", my: " + my);
 
     if (ctx.isPointInPath(path, mx, my)) {
         marbel.x = mx;
