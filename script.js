@@ -2,7 +2,7 @@ var supported = true;
 var granted = false;
 var start = false;
 
-var marbel = { x: -1, y: -1 , r: 10};
+var marbel = { x: -1, y: -1 , r: 0.02054570637*h};
 var canvas = document.getElementById("mycanvas");
 var button = document.getElementById("button");
 
