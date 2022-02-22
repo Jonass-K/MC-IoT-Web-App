@@ -27,7 +27,7 @@ class GameField {
     }
     drawBackground() {
         var design = new Image();
-        design.src = "../../assets/Design.svg";
+        design.src = "./app/assets/Design.svg";
         design.width = responsiveManager.w;
         design.height = responsiveManager.h;
         design.onload = () => {
