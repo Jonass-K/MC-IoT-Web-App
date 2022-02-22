@@ -22,9 +22,9 @@ class Game {
         console.log("start the game");
         this.isRunning = true;
         this.orientationManager.askPermission((callback) => {
-            if (callback == null) {
+            if (callback != null) {
                 console.log("no permission granted");
-                return;
+                return false;
             }
             /* TODO: hier noch ein menu generell einzeln machen
             button.style.display = "none";
@@ -34,7 +34,7 @@ class Game {
             this.gameField.draw();
             this.orientationManager.startListening(this.moveMarbel);
         });
-        // TODO: handle error
+        return true;
     }
     ;
     moveMarbel(frontToBack, leftToRight, rotateDegrees) {

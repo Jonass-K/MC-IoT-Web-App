@@ -1,7 +1,9 @@
 "use strict";
 var canvas = document.getElementById("mycanvas");
 var ctx = canvas.getContext("2d");
-var responsiveManager = ResponsiveManager.instance(canvas);
+var button = document.getElementById("button");
+var responsiveManager = ResponsiveManager.instance();
+responsiveManager.setProp();
 var marbel = new Marbel(ctx, responsiveManager);
 var gameField = new GameField(ctx, responsiveManager);
 var game = new Game(gameField, marbel);
@@ -13,7 +15,9 @@ function clickStartStopbutton() {
         game.stopGame();
     }
     else {
-        game.startGame();
+        if (game.startGame()) {
+            button.style.display = "none";
+        }
     }
 }
 ;

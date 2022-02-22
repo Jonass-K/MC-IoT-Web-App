@@ -1,10 +1,11 @@
 "use strict";
 class ResponsiveManager {
-    constructor(canvas) {
+    constructor() {
+        this.canvas = document.getElementById("mycanvas");
+        this.button = document.getElementById("button");
         this.scale = 1;
-        this.canvas = canvas;
         console.log("set proportions");
-        const computedCanvas = getComputedStyle(canvas);
+        const computedCanvas = getComputedStyle(this.canvas);
         this.w = parseInt(computedCanvas.getPropertyValue("width"), 10) * this.scale;
         this.h = parseInt(computedCanvas.getPropertyValue("height"), 10) * this.scale;
         let innerWidth = window.innerWidth;
@@ -14,10 +15,11 @@ class ResponsiveManager {
         }
         this.canvas.width = this.w;
         this.canvas.height = this.h;
+        this.button.style.width = this.w / this.scale + "px";
     }
-    static instance(canvas) {
+    static instance() {
         if (this.inst == null) {
-            this.inst = new ResponsiveManager(canvas);
+            this.inst = new ResponsiveManager();
         }
         return this.inst;
     }
@@ -33,9 +35,7 @@ class ResponsiveManager {
         }
         this.canvas.width = this.w;
         this.canvas.height = this.h;
-        /* TODO: button
-        button.style.width = w/scale + "px";
-        */
+        this.button.style.width = this.w / this.scale + "px";
     }
     ;
 }

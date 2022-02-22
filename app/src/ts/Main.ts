@@ -1,11 +1,14 @@
-var canvas = document.getElementById("mycanvas");
+var canvas = document.getElementById("mycanvas")!;
 var ctx = (canvas as any).getContext("2d");
+var button = document.getElementById("button")!;
 
-var responsiveManager = ResponsiveManager.instance(canvas!);
+var responsiveManager = ResponsiveManager.instance();
+responsiveManager.setProp();
 
 var marbel = new Marbel(ctx, responsiveManager);
 var gameField = new GameField(ctx, responsiveManager);
 var game = new Game(gameField, marbel);
+
 
 gameField.draw();
 marbel.draw();
@@ -16,7 +19,9 @@ function clickStartStopbutton() {
     if (game.isRunning) {
         game.stopGame();
     } else {
-        game.startGame();
+        if (game.startGame()) {
+            button.style.display = "none";
+        }
     }
 };
 
