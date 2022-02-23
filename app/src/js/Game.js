@@ -3,6 +3,7 @@ class Game {
     constructor(gameField, marbel) {
         this.orientationManager = OrientationManager.instance();
         this.isRunning = false;
+        this.startTime = null;
         this.lastOrientation = { ftb: 0, ltr: 0 };
         this.lastWorked = true;
         this.gameField = gameField;
@@ -17,6 +18,7 @@ class Game {
         this.marbel.resetMarbel();
         this.gameField.draw();
         this.marbel.draw();
+        this.startTime = null;
     }
     ;
     startGame() {
@@ -31,6 +33,7 @@ class Game {
                 this.gameField.draw();
                 this.marbel.draw();
                 this.orientationManager.startListening(this.moveMarbel);
+                this.startTime = performance.now();
             }
             /* TODO: hier noch ein menu generell einzeln machen
             button.style.display = "none";
@@ -95,9 +98,14 @@ class Game {
     checkForWin() {
         console.log("goal: " + gameField.goal);
         if (ctx.isPointInPath(gameField.goal, marbel.x, marbel.y)) {
+            let time = this.startTime - performance.now();
+            this.saveScore(time);
             this.stopGame();
         }
     }
     ;
+    saveScore(time) {
+        //TODO: name input and save on Firebase 
+    }
 }
 //# sourceMappingURL=Game.js.map

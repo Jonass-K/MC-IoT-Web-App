@@ -5,6 +5,7 @@ class Game {
     orientationManager: OrientationManager =  OrientationManager.instance();
 
     isRunning: Boolean = false;
+    startTime: number | null = null;
 
     lastOrientation = {ftb: 0, ltr: 0}
     lastWorked = true;
@@ -24,27 +25,24 @@ class Game {
         this.marbel.resetMarbel();
         this.gameField.draw();
         this.marbel.draw();
+        this.startTime = null;
     };
 
     startGame(): Boolean {
         console.log("start the game");
         this.isRunning = true;
 
-        this.orientationManager.askPermission( (callback: null | Error ) => {
-            if (callback != null) {
-                console.log("no permission granted");
-                return false
-            } else {
-                this.gameField.draw();
-                this.marbel.draw();
-                this.orientationManager.startListening(this.moveMarbel);
-            }
-            /* TODO: hier noch ein menu generell einzeln machen
-            button.style.display = "none";
-
-            this.gameField.setProp();
-            */
-        });
+        if (this.orientationManager.askPermission() != null) {
+            console.log("no permission granted");
+            return false
+        }
+                
+        console.log("permission granted");
+        this.gameField.draw();
+        this.marbel.draw();
+        this.orientationManager.startListening(this.moveMarbel);
+        
+        this.startTime = performance.now()
         return true
     };
 
@@ -112,7 +110,14 @@ class Game {
     private checkForWin() {
         console.log("goal: " + gameField.goal);
         if (ctx.isPointInPath(gameField.goal, marbel.x, marbel.y)) {
+            let time = this.startTime! - performance.now()
+            this.saveScore(time);    
             this.stopGame();
         }
     };
+
+
+    private saveScore(time: number) {
+        //TODO: name input and save on Firebase 
+    }
 }
