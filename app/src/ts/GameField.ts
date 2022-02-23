@@ -13,7 +13,6 @@ class GameField {
     }
 
     draw() {
-        console.log("draw");
         this.ctx.clearRect(0, 0, responsiveManager.w, responsiveManager.h);
         this.ctx.imageSmoothingEnabled = false;
     

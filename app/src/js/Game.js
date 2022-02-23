@@ -18,7 +18,6 @@ class Game {
         this.marbel.resetMarbel();
         this.gameField.draw();
         this.marbel.draw();
-        this.startTime = null;
     }
     ;
     startGame() {
@@ -30,9 +29,11 @@ class Game {
                 return false;
             }
             else {
+                console.log("permission granted");
                 this.gameField.draw();
+                this.marbel.resetMarbel();
                 this.marbel.draw();
-                this.orientationManager.startListening(this.moveMarbel);
+                this.orientationManager.startListening(this.moveMarbel.bind(this));
                 this.startTime = performance.now();
             }
             /* TODO: hier noch ein menu generell einzeln machen
@@ -41,9 +42,11 @@ class Game {
             this.gameField.setProp();
             */
         });
+        console.log("return");
         return true;
     }
     ;
+    // TODO: this.marbel can't be used so marbel from Main.ts is used
     moveMarbel(frontToBack, leftToRight, rotateDegrees) {
         //document.getElementById('gyro-data').innerHTML = "rotateDegrees: " + rotateDegrees + ", lefToRight: " + leftToRight + ", frontToBack: " + frontToBack;
         console.log("handle orientation event");
@@ -53,24 +56,24 @@ class Game {
         let mx = this.marbel.x + leftToRight;
         let my = this.marbel.y + frontToBack;
         console.log("mx: " + mx + ", my: " + my);
-        if (gameField.isInPath(mx, my, marbel.radius)
+        if (this.gameField.isInPath(mx, my, this.marbel.radius)
             && (this.lastWorked == true
                 || leftToRight / Math.abs(leftToRight) != this.lastOrientation.ltr
                 || frontToBack / Math.abs(frontToBack) != this.lastOrientation.ftb)) {
-            marbel.x = mx;
-            marbel.y = my;
+            this.marbel.x = mx;
+            this.marbel.y = my;
         }
-        else if (gameField.isInPath(marbel.x, my, marbel.radius)
+        else if (this.gameField.isInPath(this.marbel.x, my, this.marbel.radius)
             && (this.lastWorked == true
                 || leftToRight / Math.abs(leftToRight) != this.lastOrientation.ltr
                 || frontToBack / Math.abs(frontToBack) != this.lastOrientation.ftb)) {
-            marbel.y = my;
+            this.marbel.y = my;
         }
-        else if (gameField.isInPath(mx, marbel.y, marbel.radius)
+        else if (this.gameField.isInPath(mx, this.marbel.y, this.marbel.radius)
             && (this.lastWorked == true
                 || leftToRight / Math.abs(leftToRight) != this.lastOrientation.ltr
                 || frontToBack / Math.abs(frontToBack) != this.lastOrientation.ftb)) {
-            marbel.x = mx;
+            this.marbel.x = mx;
         }
         else {
             this.lastOrientation = { ftb: frontToBack / Math.abs(frontToBack), ltr: leftToRight / Math.abs(leftToRight) };
@@ -79,16 +82,16 @@ class Game {
             return;
         }
         this.lastWorked = true;
-        gameField.drawForeground();
-        marbel.draw();
+        this.gameField.drawForeground();
+        this.marbel.draw();
         this.checkForLose();
         this.checkForWin();
     }
     ;
     checkForLose() {
-        console.log("holes: " + gameField.holes);
-        for (var i = 0; i < gameField.holes.length; i++) {
-            if (ctx.isPointInPath(gameField.holes[i], marbel.x, marbel.y)) {
+        console.log("holes: " + this.gameField.holes);
+        for (var i = 0; i < this.gameField.holes.length; i++) {
+            if (ctx.isPointInPath(this.gameField.holes[i], this.marbel.x, this.marbel.y)) {
                 this.stopGame();
                 break;
             }
@@ -96,8 +99,8 @@ class Game {
     }
     ;
     checkForWin() {
-        console.log("goal: " + gameField.goal);
-        if (ctx.isPointInPath(gameField.goal, marbel.x, marbel.y)) {
+        console.log("goal: " + this.gameField.goal);
+        if (ctx.isPointInPath(this.gameField.goal, this.marbel.x, this.marbel.y)) {
             let time = this.startTime - performance.now();
             this.saveScore(time);
             this.stopGame();
@@ -107,5 +110,6 @@ class Game {
     saveScore(time) {
         //TODO: name input and save on Firebase 
     }
+    ;
 }
 //# sourceMappingURL=Game.js.map

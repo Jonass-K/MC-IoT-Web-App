@@ -25,6 +25,7 @@ function clickStartStopButton() {
                 canvas.style.display = "inline";
                 responsiveManager.setProp();
                 gameField.draw();
+                marbel.resetMarbel();
                 marbel.draw();
             }
             
