@@ -21,15 +21,16 @@ class ResponsiveManager {
 
     setProp() {
         console.log("set proportions");
-
         const computedCanvas = getComputedStyle(this.canvas);
         this.w = parseInt(computedCanvas.getPropertyValue("width"), 10) * this.scale;
+        console.log("comp w: " + this.w);
         this.h = parseInt(computedCanvas.getPropertyValue("height"), 10) * this.scale;
+        console.log("comp h: " + this.h);
         
-        if (this.w < 681 && this.h < 1468) {
-            this.w = 681;
-            this.h = 1468;
-        }
+        //if (this.w < 681 && this.h < 1468) {
+        //    this.w = 681;
+        //   this.h = 1468;
+        //}
 
 
         (this.canvas as any).width = this.w;

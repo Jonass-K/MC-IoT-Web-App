@@ -30,7 +30,8 @@ function clickStartStopButton() {
 ;
 function onResize() {
     responsiveManager.setProp();
-    game.stopGame();
+    gameField.draw();
+    marbel.draw();
 }
 ;
 function clickInfoButton() {
