@@ -21,10 +21,13 @@ class ResponsiveManager {
         console.log("comp w: " + this.w);
         this.h = parseInt(computedCanvas.getPropertyValue("height"), 10) * this.scale;
         console.log("comp h: " + this.h);
+        this.h = this.h - 20;
+        this.w = this.h * (335 / 722);
         //if (this.w < 681 && this.h < 1468) {
         //    this.w = 681;
-        //   this.h = 1468;
+        //    this.h = 1468;
         //}
+        //this.canvas.style.width = String(this.w);
         this.canvas.width = this.w;
         this.canvas.height = this.h;
         //  this.button.style.width = this.w / this.scale + "px";
