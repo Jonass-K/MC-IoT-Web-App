@@ -83,7 +83,7 @@ class GameField {
     
     private drawPath() {
         this.ctx.strokeStyle = 'black';
-        this.ctx.fillStyle = '#CAA5A4';
+        this.ctx.fillStyle = '#DDA5AD';
         this.ctx.lineWidth = 3;
 
         let w = this.responsiveManager.w;

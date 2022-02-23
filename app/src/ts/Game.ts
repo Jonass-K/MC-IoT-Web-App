@@ -23,6 +23,7 @@ class Game {
         
         this.marbel.resetMarbel();
         this.gameField.draw();
+        this.marbel.draw();
     };
 
     startGame(): Boolean {
@@ -33,14 +34,16 @@ class Game {
             if (callback != null) {
                 console.log("no permission granted");
                 return false
+            } else {
+                this.gameField.draw();
+                this.marbel.draw();
+                this.orientationManager.startListening(this.moveMarbel);
             }
             /* TODO: hier noch ein menu generell einzeln machen
             button.style.display = "none";
 
             this.gameField.setProp();
             */
-            this.gameField.draw();
-            this.orientationManager.startListening(this.moveMarbel);
         });
         return true
     };

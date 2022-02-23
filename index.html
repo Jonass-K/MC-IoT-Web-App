@@ -5,16 +5,32 @@
     <meta charset="utf-8">
 
     <title>Kugellabyrinth</title>
-
-    <link rel="stylesheet" href="./app/style/index.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
+    <link rel="stylesheet" href="./app/style/index2.css">
 </head>
 
 <body>
     <canvas id="mycanvas"></canvas>
 
-    <div id="button" onclick="clickButton()">
-        <h2 id="button-text">Start Game</h2>
-        <img id="arrow" src="./app/assets/Arrow.svg"></img>
+    <div id="menu">
+        <img id="title-img" src="./app/assets/Title.png" alt="Title">
+
+        <div id="scoreboard">
+            <h1>Scoreboard</h1>
+        </div>
+
+        <div id="scoreboard-button" class="button" onclick="clickScoreboardButton()">
+            <h2>Scoreboard</h2>
+        </div>
+
+        <div class="button" onclick="clickInfoButton()">
+            <h2>Info</h2>
+        </div>
+
+        <div id="start-button" class="button" onclick="clickStartStopButton()">
+            <h2>Start Game</h2>
+        </div>
     </div>
 
     <script src="./app/src/js/Marbel.js"></script>

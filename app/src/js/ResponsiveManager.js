@@ -1,21 +1,12 @@
 "use strict";
 class ResponsiveManager {
     constructor() {
+        this.w = 1;
+        this.h = 1;
         this.canvas = document.getElementById("mycanvas");
         this.button = document.getElementById("button");
         this.scale = 1;
-        console.log("set proportions");
-        const computedCanvas = getComputedStyle(this.canvas);
-        this.w = parseInt(computedCanvas.getPropertyValue("width"), 10) * this.scale;
-        this.h = parseInt(computedCanvas.getPropertyValue("height"), 10) * this.scale;
-        let innerWidth = window.innerWidth;
-        if (innerWidth / this.h > 335 / 722
-            && window.innerWidth / this.h < 550 / 722) {
-            this.w = innerWidth * 0.9;
-        }
-        this.canvas.width = this.w;
-        this.canvas.height = this.h;
-        this.button.style.width = this.w / this.scale + "px";
+        this.setProp();
     }
     static instance() {
         if (this.inst == null) {
@@ -28,14 +19,13 @@ class ResponsiveManager {
         const computedCanvas = getComputedStyle(this.canvas);
         this.w = parseInt(computedCanvas.getPropertyValue("width"), 10) * this.scale;
         this.h = parseInt(computedCanvas.getPropertyValue("height"), 10) * this.scale;
-        let innerWidth = window.innerWidth;
-        if (innerWidth / this.h > 335 / 722
-            && window.innerWidth / this.h < 550 / 722) {
-            this.w = innerWidth * 0.9;
+        if (this.w < 681 && this.h < 1468) {
+            this.w = 681;
+            this.h = 1468;
         }
         this.canvas.width = this.w;
         this.canvas.height = this.h;
-        this.button.style.width = this.w / this.scale + "px";
+        //  this.button.style.width = this.w / this.scale + "px";
     }
     ;
 }

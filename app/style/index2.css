@@ -1,0 +1,110 @@
+@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+
+html, body {
+    margin: 10px;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+    align-content: center;
+
+    
+}
+
+#mycanvas {
+    border: solid black 5px;
+    border-radius: 25px;
+
+    aspect-ratio: 335/722;
+
+    margin-bottom: 50px;
+    background-color: #BBDA9B;
+}
+
+#menu {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: stretch;
+    align-content: center;
+
+    flex: 1 1 0;
+
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    font-family: 'Fira Code', monospace;
+}
+
+#title-img {
+    margin-bottom: 100px;
+}
+
+.button {
+    border: solid black 5px;
+    border-radius: 25px;
+
+    margin-top: 20px;
+
+    text-align: center;
+}
+
+#scoreboard {
+    border: solid black 5px;
+    border-radius: 25px;
+
+    flex: 1 1 0;
+
+    text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+    #mycanvas {
+        display: none;
+    }
+    
+    #menu {
+        margin-left: 0px;
+        margin-right: 0px;
+
+        padding: 30px;
+    }
+
+    .button {
+        min-height: 150px;
+        font-size: xx-large;
+        margin-top: 100px;
+    }
+
+    #start-button {
+        margin-bottom: 200px;
+    }
+
+    #scoreboard {
+        font-size: xx-large;
+    }
+
+    #scoreboard-button {
+        display: none;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    #mycanvas {
+        
+    }
+
+    #title-img {
+        display: none;
+    }
+
+    #scoreboard-button {
+        display: none;
+    }
+}
