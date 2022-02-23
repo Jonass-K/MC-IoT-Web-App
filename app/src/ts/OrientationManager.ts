@@ -37,8 +37,8 @@ class OrientationManager {
             console.log("case: no support");
             callback(new Error("DeviceOrientation is not supported."));
 
-        } else if (typeof (DeviceMotionEvent as any).requestPermission === "function") {
-            var requestPermission: Function = (DeviceMotionEvent as any).requestPermission
+        } else if (typeof (DeviceOrientationEvent as any).requestPermission === "function") {
+            var requestPermission: Function = (DeviceOrientationEvent as any).requestPermission
 
             this.support = true
 
