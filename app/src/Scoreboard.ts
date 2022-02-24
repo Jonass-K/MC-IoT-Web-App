@@ -10,9 +10,11 @@ export class Scoreboard {
     async refreshScoreboard() {
         const scores = await this.service.getScores()
 
+        let i = 0
+
         scores.forEach((score) => {            
             const scoreboard = document.getElementById("scoreboard")!;
-            scoreboard.appendChild(this.scoreboardItem(score.name, score.time));
+            scoreboard.appendChild(this.scoreboardItem(++i, score.name, score.date , score.time));
         }); 
     }
 
@@ -23,18 +25,32 @@ export class Scoreboard {
         this.refreshScoreboard();
     }
 
-    private scoreboardItem(name: string, time: number) {
-        const nameElem = document.createElement("h3")
+    private scoreboardItem(rank: number, name: string, date: Date,  time: number) {        
+        const rankElem = document.createElement("td")
+        rankElem.innerHTML = this.pad(rank, 3);
+
+        const nameElem = document.createElement("td")
         nameElem.innerHTML = name;
+
+        const dateElem = document.createElement("td")
+        dateElem.innerHTML = `${this.pad(date.getDay(), 2)}.${this.pad(date.getMonth(), 2)}.${date.getFullYear()}`;
         
-        const timeElem = document.createElement("h3");
+        const timeElem = document.createElement("td");
         timeElem.innerHTML = time + " sek";
             
-        const divElem = document.createElement("div");
-        divElem.className = "scoreBoardItem"
-        divElem.appendChild(nameElem);
-        divElem.appendChild(timeElem);
+        const trElem = document.createElement("tr");
+        trElem.className = "table-row"
+        trElem.appendChild(rankElem);
+        trElem.appendChild(nameElem);
+        trElem.appendChild(dateElem);
+        trElem.appendChild(timeElem);
 
-        return divElem  
+        return trElem  
+    }
+
+    private pad(num: number, size: number) {
+        let numF = num.toString();
+        while (numF.length < size) numF = "0" + numF;
+        return numF;
     }
 }

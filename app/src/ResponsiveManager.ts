@@ -28,8 +28,8 @@ export class ResponsiveManager {
         this.h = this.h - 20;
         
         console.log(`Browser is ${navigator.userAgent}`);
-        if (navigator.userAgent.indexOf("Chrome") != -1 ) {
-            this.h = this.h * 2;
+        if (navigator.userAgent.indexOf("Chrome") != -1 ) {            
+            this.h = this.h * 1.2;
         }
 
         this.w = this.h * (335/722);

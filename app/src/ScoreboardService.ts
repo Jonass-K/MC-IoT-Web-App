@@ -48,6 +48,6 @@ const converter = {
     },
     fromFirestore: (snapshot: DocumentSnapshot, options: SnapshotOptions) => {
         const data = snapshot.data(options);
-        return data ? new Score(data.name, data.time, data.date) : null;
+        return data ? new Score(data.name, data.time, data.date.toDate()) : null;
     }
 };
