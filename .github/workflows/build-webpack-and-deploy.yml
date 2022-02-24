@@ -1,9 +1,7 @@
-name: Build and GH-Page Deploy
+name: Build webpack and GH-Page Deploy
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   build:
@@ -19,7 +17,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-  
 
       - name: Install
         run: npm install
@@ -31,4 +28,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
-          folder: app/dist
+          folder: dist
