@@ -27,8 +27,16 @@ export class OrientationManager {
         });
     }
 
-    stopListening() {
-        window.removeEventListener("deviceorientation", function (event: { alpha: any; gamma: any; beta: any; }) {});
+    stopListening(eventHandler: (frontToback: number, leftToRight: number, rotateDegrees: number) => void) {
+        window.removeEventListener("deviceorientation", (event: { alpha: any; gamma: any; beta: any; }) => {
+            console.log("orientationEvent");
+            
+            var rotateDegrees = event.alpha;
+            var leftToRight = event.gamma;
+            var frontToBack = event.beta;
+    
+            eventHandler(frontToBack, leftToRight, rotateDegrees);
+        });
     };
 
     askPermission(callback: (a: Error | null) => void) {

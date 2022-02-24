@@ -10,6 +10,7 @@
   "license": "MIT-License",
   "dependencies": {
     "firebase": "^9.6.7",
+    "http-server": "^14.1.0",
     "serve": "^13.0.2"
   },
   "devDependencies": {

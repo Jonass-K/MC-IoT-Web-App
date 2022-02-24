@@ -135,5 +135,4 @@ dist
 # certificates for localhost https server
 cert/
 
-
 .vscode/settings.json

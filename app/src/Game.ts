@@ -1,11 +1,13 @@
 import { GameField } from "./GameField";
 import { Marbel } from "./Marbel";
 import { OrientationManager } from "./OrientationManager";
+import { Scoreboard } from "./Scoreboard";
 
 export class Game {
 
     gameField: GameField;
     marbel: Marbel;
+    scoreboard: Scoreboard;
     ctx: any;
 
     orientationManager: OrientationManager =  OrientationManager.instance();
@@ -16,22 +18,24 @@ export class Game {
     lastOrientation = {ftb: 0, ltr: 0}
     lastWorked = true;
 
-    constructor(gameField: GameField, marbel: Marbel, ctx: any) {
+    constructor(gameField: GameField, marbel: Marbel, scoreboard: Scoreboard, ctx: any) {
         this.gameField = gameField;
         this.marbel = marbel;
+        this.scoreboard = scoreboard;
         this.ctx = ctx;
     };
 
     stopGame() {
         console.log("stop the game");
+        this.startTime = null;
         this.isRunning = false;
 
-        this.orientationManager.stopListening();
-        //document.getElementById('button-text').innerHTML = "CLICK TO START";
+        this.orientationManager.stopListening(this.moveMarbel);
         
         this.marbel.resetMarbel();
         this.gameField.draw();
         this.marbel.draw();
+    
     };
 
     startGame(): Boolean {
@@ -50,11 +54,6 @@ export class Game {
                 this.orientationManager.startListening(this.moveMarbel.bind(this));
                 this.startTime = performance.now()
             }
-            /* TODO: hier noch ein menu generell einzeln machen
-            button.style.display = "none";
-
-            this.gameField.setProp();
-            */
         });
         console.log("return");
         return true
@@ -133,6 +132,6 @@ export class Game {
     };
 
     private saveScore(time: number) {
-        //TODO: name input and save on Firebase 
+        this.scoreboard.newScore(time * 1000);
     };
 }

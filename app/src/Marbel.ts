@@ -6,24 +6,22 @@ export class Marbel {
     
     ctx: any;
 
-    x: number;
-    y: number;
-    radius: number;
+    x: number = 0;
+    y: number = 0;
+    radius: number = 0;
 
     constructor(ctx: any, responsiveManager: ResponsiveManager) {
         this.responsiveManager = responsiveManager;
         
         this.ctx = ctx;
 
-        this.x = 0.8447761194 * responsiveManager.w;
-        this.y = 0.9681440443 * responsiveManager.h;
-        this.radius = 0.01554570637 * responsiveManager.h;
+        this.resetMarbel();
     }
 
     resetMarbel() {
         this.x = 0.8447761194 * this.responsiveManager.w;
         this.y = 0.9681440443 * this.responsiveManager.h;
-        this.radius = 0.01554570637 * this.responsiveManager.h;
+        this.radius = 0.01254570637 * this.responsiveManager.h;
     }
 
     draw() {

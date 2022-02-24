@@ -41,7 +41,6 @@ export class GameField {
         design.width = this.responsiveManager.w;
         design.height = this.responsiveManager.h;
         
-    
         design.onload = () => {
             //design.width *= 0.88;
             //design.height *= 0.88;
@@ -84,7 +83,7 @@ export class GameField {
     
     private drawPath() {
         this.ctx.strokeStyle = 'black';
-        this.ctx.fillStyle = '#DDA5AD';
+        this.ctx.fillStyle = '#EA8291';
         this.ctx.lineWidth = 3;
 
         let w = this.responsiveManager.w;
@@ -218,7 +217,7 @@ export class GameField {
         this.path.arcTo(w, h, 0.758208955223881*w, h, 0);
     
         this.ctx.fill(this.path);    
-        this.ctx.stroke(this.path);
+        //this.ctx.stroke(this.path);
     }
 
     private drawCircle(x: number, y: number, r: number, color = 'black', stroke = false) {

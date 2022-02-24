@@ -10,7 +10,7 @@ export class ScoreboardService {
 
     async getScores(): Promise<Score[]> {
         console.log("fetch scores");
-        const q = query(this.clction, orderBy("time"), limit(10));
+        const q = query(this.clction, orderBy("time"), limit(5));
         const snapshot = await getDocs(q);
 
         let scores: Score[] = [];

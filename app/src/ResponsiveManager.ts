@@ -5,7 +5,6 @@ export class ResponsiveManager {
     w: number = 1;
     h: number = 1;
     canvas = document.getElementById("mycanvas")!;
-    button = document.getElementById("button")!;
     private scale: number = 1;
 
     private constructor() {
@@ -27,6 +26,12 @@ export class ResponsiveManager {
         console.log("computational w: " + this.w + ", h: " + this.h);
 
         this.h = this.h - 20;
+        
+        console.log(`Browser is ${navigator.userAgent}`);
+        if (navigator.userAgent.indexOf("Chrome") != -1 ) {
+            this.h = this.h * 2;
+        }
+
         this.w = this.h * (335/722);
         
         (this.canvas as any).width = this.w;
