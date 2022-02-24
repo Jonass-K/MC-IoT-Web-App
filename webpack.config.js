@@ -12,8 +12,12 @@ module.exports = {
                     to: `${__dirname}/dist/index.html`,
                 },
                 {
-                    from: "./app/style/index.css",
-                    to: `${__dirname}/dist/app/style/index.css`,
+                    from: "./app/style/",
+                    to: `${__dirname}/dist/app/style/`,
+                },
+                {
+                    from: "./app/assets/",
+                    to: `${__dirname}/dist/app/assets/`,
                 },
             ],
         }),
