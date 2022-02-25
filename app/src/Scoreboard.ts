@@ -8,18 +8,24 @@ export class Scoreboard {
     constructor() { }
 
     async refreshScoreboard() {
-        const scores = await this.service.getScores()
-
-        let i = 0
-
+        const scores = await this.service.getScores();
+    
+        const scoreboard = document.getElementById("scoreboard")!;
+        while (scoreboard.childElementCount > 1) {
+            scoreboard.removeChild(scoreboard.lastChild);
+        }
+        
+        let rank = 0;
         scores.forEach((score) => {            
-            const scoreboard = document.getElementById("scoreboard")!;
-            scoreboard.appendChild(this.scoreboardItem(++i, score.name, score.date , score.time));
+            scoreboard.appendChild(this.scoreboardItem(++rank, score.name, score.date , score.time));
         }); 
     }
 
     async newScore(time: number) {
-        let name = prompt("Your reached the goal. Please Enter your Name", "Anonym");
+        let name = prompt(`Your reached the goal in ${time} seconds. Please Enter your Name`, "Anonym");
+        while (name.length > 14) { 
+            name = prompt(`Name is to long. Please Enter a name with less than 15 characters`, "Anonym");
+        }
         await this.service.newScore(new Score(name, time));   
 
         this.refreshScoreboard();

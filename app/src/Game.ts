@@ -3,6 +3,7 @@ import { Marbel } from "./Marbel";
 import { OrientationManager } from "./OrientationManager";
 import { Scoreboard } from "./Scoreboard";
 
+
 export class Game {
 
     gameField: GameField;
@@ -32,10 +33,13 @@ export class Game {
 
         this.orientationManager.stopListening(this.moveMarbel);
         
-        this.marbel.resetMarbel();
-        this.gameField.draw();
-        this.marbel.draw();
-    
+        //this.marbel.resetMarbel();
+        //this.gameField.draw();
+        //this.marbel.draw();
+        const canvas = document.getElementById("mycanvas")!;
+        const menu = document.getElementById("menu")!;
+        canvas.style.display = "none";
+        menu.style.display = "inline";
     };
 
     startGame(): Boolean {
@@ -52,7 +56,7 @@ export class Game {
                 this.marbel.resetMarbel();
                 this.marbel.draw();
                 this.orientationManager.startListening(this.moveMarbel.bind(this));
-                this.startTime = performance.now()
+                this.startTime = performance.now();
             }
         });
         console.log("return");
@@ -113,8 +117,10 @@ export class Game {
     private checkForLose() {
         console.log("holes: " + this.gameField.holes);
         for (var i = 0; i < this.gameField.holes.length; i++) {
-            if (this.ctx.isPointInPath(this.gameField.holes[i], this.marbel.x, this.marbel.y)) {
+            if (this.ctx.isPointInPath(this.gameField.holes[i], this.marbel.x, this.marbel.y) && this.isRunning) {
                 this.stopGame();
+                break;
+            } else if (!this.isRunning) {
                 break;
             }
         }
@@ -123,15 +129,18 @@ export class Game {
 
     private checkForWin() {
         console.log("goal: " + this.gameField.goal);
-        if (this.ctx.isPointInPath(this.gameField.goal, this.marbel.x, this.marbel.y)) {
-            let time = this.startTime! - performance.now()
-            this.saveScore(time);  
+        if (this.ctx.isPointInPath(this.gameField.goal, this.marbel.x, this.marbel.y) && this.isRunning) {
+            const endtime = performance.now();
+            const time = endtime - this.startTime;
+            console.log(`won game in: ${time}`);
 
             this.stopGame();
+            
+            this.saveScore(time);  
         }
     };
 
     private saveScore(time: number) {
-        this.scoreboard.newScore(time * 1000);
+        this.scoreboard.newScore(time / 1000);
     };
 }
