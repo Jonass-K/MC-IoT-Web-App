@@ -137,12 +137,6 @@ td {
     #mycanvas {
         display: none;
     }
-    
-    #menu {
-        margin-left: 0px;
-        margin-right: 0px;
-		padding: 25px;
-    }
 
     .button {
         font-size: x-large;
