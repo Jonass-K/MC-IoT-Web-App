@@ -35,7 +35,7 @@ export class GameField {
         this.drawGoal();
     }
     
-    private drawBackground() {
+    drawBackground() {
         var design = new Image();
         design.src = "./app/assets/Design.svg";
         design.width = this.responsiveManager.w;

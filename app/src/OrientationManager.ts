@@ -27,7 +27,7 @@ export class OrientationManager {
         });
     }
 
-    stopListening(eventHandler: (frontToback: number, leftToRight: number, rotateDegrees: number) => void) {
+    stopListening(handleEvent: (frontToback: number, leftToRight: number, rotateDegrees: number) => void) {
         window.removeEventListener("deviceorientation", (event: { alpha: any; gamma: any; beta: any; }) => {
             console.log("orientationEvent");
             
@@ -35,7 +35,7 @@ export class OrientationManager {
             var leftToRight = event.gamma;
             var frontToBack = event.beta;
     
-            eventHandler(frontToBack, leftToRight, rotateDegrees);
+            handleEvent(frontToBack, leftToRight, rotateDegrees);
         });
     };
 

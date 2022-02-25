@@ -1,6 +1,7 @@
 import { GameField } from "./GameField";
 import { Marbel } from "./Marbel";
 import { OrientationManager } from "./OrientationManager";
+import { ResponsiveManager } from "./ResponsiveManager";
 import { Scoreboard } from "./Scoreboard";
 
 
@@ -40,6 +41,8 @@ export class Game {
         const menu = document.getElementById("menu")!;
         canvas.style.display = "none";
         menu.style.display = "inline";
+        window.location.reload();
+        //ResponsiveManager.instance().setProp();
     };
 
     startGame(): Boolean {
@@ -108,7 +111,8 @@ export class Game {
         }
 
         this.lastWorked = true;
-        this.gameField.drawForeground();
+        this.gameField.drawBackground(); 
+        this.gameField.drawForeground(); 
         this.marbel.draw();
         this.checkForLose();
         this.checkForWin();
@@ -127,20 +131,19 @@ export class Game {
     };
 
 
-    private checkForWin() {
+    private async checkForWin() {
         console.log("goal: " + this.gameField.goal);
         if (this.ctx.isPointInPath(this.gameField.goal, this.marbel.x, this.marbel.y) && this.isRunning) {
             const endtime = performance.now();
             const time = endtime - this.startTime;
-            console.log(`won game in: ${time}`);
-
+            this.isRunning = false;
+            console.log(`won game in: ${time}`);            
+            await this.saveScore(time);  
             this.stopGame();
-            
-            this.saveScore(time);  
         }
     };
 
-    private saveScore(time: number) {
-        this.scoreboard.newScore(time / 1000);
+    private async saveScore(time: number) {
+        await this.scoreboard.newScore(Number((time / 1000).toPrecision(4).substring(0, 4)));
     };
 }
