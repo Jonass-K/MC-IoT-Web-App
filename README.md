@@ -1,6 +1,7 @@
 # SilverBullet
 
 A game for mobile devices using the orientation sensors. The project was made as an small project for university. 
+I had not much time, so it's very buggy. 
 
 Play on your smartphone at: https://jonass-k.github.io/SilverBullet
 
